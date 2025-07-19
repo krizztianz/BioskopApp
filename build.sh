@@ -7,4 +7,4 @@ echo ">> Generate Swagger docs..."
 swag init
 
 echo ">> Build Go binary..."
-go build -o app main.go
+go build -o out main.go
