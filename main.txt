@@ -1,0 +1,94 @@
+// @title Bioskop API
+// @version 1.0
+// @description API untuk mengelola data bioskop
+// @host localhost:8080
+// @BasePath /
+package main
+
+import (
+	"bioskop-app/database"
+	"bioskop-app/handlers"
+
+	_ "bioskop-app/docs"
+
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+)
+
+func main() {
+	database.InitDB()
+
+	router := gin.Default()
+
+	// Swagger UI
+	//router.GET("/endpoints/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("http://localhost:8080/endpoints/doc.json")))
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	// Endpoint CRUD
+	// CreateBioskop godoc
+	// @Summary      Tambah bioskop baru
+	// @Description  Menambahkan bioskop ke database
+	// @Tags         bioskop
+	// @Accept       json
+	// @Produce      json
+	// @Param        bioskop body models.Bioskop true "Data bioskop"
+	// @Success      201 {object} models.Bioskop
+	// @Failure      400 {object} map[string]string
+	// @Failure      500 {object} map[string]string
+	// @Router       /bioskop [post]
+	router.POST("/bioskop", handlers.CreateBioskop)
+
+	// GetAllBioskop godoc
+	// @Summary      Daftar semua bioskop
+	// @Description  Mengambil semua data bioskop
+	// @Tags         bioskop
+	// @Produce      json
+	// @Success      200 {array} models.Bioskop
+	// @Failure      500 {object} map[string]string
+	// @Router       /bioskop [get]
+	router.GET("/bioskop", handlers.GetAllBioskop)
+
+	// GetBioskopByID godoc
+	// @Summary      Detail bioskop berdasarkan ID
+	// @Description  Mengambil detail bioskop berdasarkan ID
+	// @Tags         bioskop
+	// @Produce      json
+	// @Param        id path int true "ID bioskop"
+	// @Success      200 {object} models.Bioskop
+	// @Failure      400 {object} map[string]string
+	// @Failure      404 {object} map[string]string
+	// @Failure      500 {object} map[string]string
+	// @Router       /bioskop/{id} [get]
+	router.GET("/bioskop/:id", handlers.GetBioskopByID)
+
+	// UpdateBioskop godoc
+	// @Summary      Perbarui data bioskop
+	// @Description  Memperbarui data bioskop berdasarkan ID
+	// @Tags         bioskop
+	// @Accept       json
+	// @Produce      json
+	// @Param        id path int true "ID bioskop"
+	// @Param        bioskop body models.Bioskop true "Data bioskop baru"
+	// @Success      200 {object} map[string]string
+	// @Failure      400 {object} map[string]string
+	// @Failure      404 {object} map[string]string
+	// @Failure      500 {object} map[string]string
+	// @Router       /bioskop/{id} [put]
+	router.PUT("/bioskop/:id", handlers.UpdateBioskop)
+
+	// DeleteBioskop godoc
+	// @Summary      Hapus bioskop
+	// @Description  Menghapus bioskop berdasarkan ID
+	// @Tags         bioskop
+	// @Produce      json
+	// @Param        id path int true "ID bioskop"
+	// @Success      200 {object} map[string]string
+	// @Failure      400 {object} map[string]string
+	// @Failure      404 {object} map[string]string
+	// @Failure      500 {object} map[string]string
+	// @Router       /bioskop/{id} [delete]
+	router.DELETE("/bioskop/:id", handlers.DeleteBioskop)
+
+	router.Run(":8080")
+}

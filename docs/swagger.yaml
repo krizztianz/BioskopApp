@@ -1,0 +1,196 @@
+basePath: /
+definitions:
+  models.Bioskop:
+    properties:
+      id:
+        type: integer
+      lokasi:
+        type: string
+      nama:
+        type: string
+      rating:
+        type: number
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API untuk mengelola data bioskop
+  title: Bioskop API
+  version: "1.0"
+paths:
+  /bioskop:
+    get:
+      description: Mengambil semua data bioskop
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Bioskop'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Daftar semua bioskop
+      tags:
+      - bioskop
+    post:
+      consumes:
+      - application/json
+      description: Menambahkan bioskop ke database
+      parameters:
+      - description: Data bioskop
+        in: body
+        name: bioskop
+        required: true
+        schema:
+          $ref: '#/definitions/models.Bioskop'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Bioskop'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Tambah bioskop baru
+      tags:
+      - bioskop
+  /bioskop/{id}:
+    delete:
+      description: Menghapus bioskop berdasarkan ID
+      parameters:
+      - description: ID bioskop
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Hapus bioskop
+      tags:
+      - bioskop
+    get:
+      description: Mengambil detail bioskop berdasarkan ID
+      parameters:
+      - description: ID bioskop
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Bioskop'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Detail bioskop berdasarkan ID
+      tags:
+      - bioskop
+    put:
+      consumes:
+      - application/json
+      description: Memperbarui data bioskop berdasarkan ID
+      parameters:
+      - description: ID bioskop
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data bioskop baru
+        in: body
+        name: bioskop
+        required: true
+        schema:
+          $ref: '#/definitions/models.Bioskop'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Perbarui data bioskop
+      tags:
+      - bioskop
+swagger: "2.0"
