@@ -5,18 +5,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB
 
 func InitDB() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Gagal memuat .env")
-	}
-
 	psqlInfo := os.Getenv("DATABASE_URL")
 	if psqlInfo == "" {
 		log.Fatal("DATABASE_URL tidak ditemukan")
