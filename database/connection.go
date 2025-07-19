@@ -11,6 +11,8 @@ import (
 var DB *sql.DB
 
 func InitDB() {
+	var err error
+
 	psqlInfo := os.Getenv("DATABASE_URL")
 	if psqlInfo == "" {
 		log.Fatal("DATABASE_URL tidak ditemukan")
